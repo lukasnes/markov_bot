@@ -1,7 +1,26 @@
 """Generate Markov text from text files."""
 
 from random import choice
+import os
+import discord
+from secrets import DISCORD_TOKEN
 
+client = discord.Client()
+
+@client.event
+async def on_ready():
+    print(f'Successfully connected! Logged in as {client.user}')
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        print(message)
+        return
+
+    if message.content.startswith('$hello'):
+        await message.channel.send('Hello!')
+
+client.run(DISCORD_TOKEN)
 
 def open_and_read_file(file_path):
     """Take file path as string; return text as string.
